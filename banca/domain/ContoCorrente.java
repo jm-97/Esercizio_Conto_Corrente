@@ -1,14 +1,13 @@
 package banca.domain;
 
-import banca.domain.*;
 import banca.domain.exception.*;
-import java.util.*;
 
 public abstract class ContoCorrente {
   // Campi della classe Astratta ContoCorrente
   private int id; 
   private double saldo; 
   private Cliente cliente;
+  
   // Costruttore della Classe
   public ContoCorrente ( int id , double saldo ) {
     this.id = id; 
@@ -22,9 +21,12 @@ public abstract class ContoCorrente {
   public double getSaldo () {
     return this.saldo; 
   }
-
   
-  /*
+  
+  public void setSaldo(double saldo) {
+	this.saldo = saldo;
+}
+/*
       Metodi Base del Conto 
   */
   // Metodo astratto deposita
@@ -41,4 +43,11 @@ public abstract class ContoCorrente {
   public void setCliente ( Cliente c ) {
     this.cliente = c;
   }
+  
+  //Metodo bonifica
+  public void bonifica(double amount, ContoCorrente destinatario) throws SaldoInsufficenteException {
+	  this.preleva(amount);
+	  destinatario.deposita(amount);
+  }
+  
 }

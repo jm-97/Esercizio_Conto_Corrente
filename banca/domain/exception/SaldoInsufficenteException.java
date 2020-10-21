@@ -1,4 +1,4 @@
-package banca.domain.exceptions;
+package banca.domain.exception;
 
 import banca.domain.*;
 

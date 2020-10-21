@@ -62,6 +62,14 @@ public class Cliente {
     // Ritorno al Stringa contenuta nello String builder
   }
 
+	public int getId() {
+		return id;
+	}
+	
+	public ContoCorrente getContoById(int id) {
+		return conti.get(id);
+	}
+
 
 
 
