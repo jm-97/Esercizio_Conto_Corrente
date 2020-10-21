@@ -1,6 +1,6 @@
 package banca.domain;
 
-enum Sesso {
+public enum Sesso {
   MASCHIO,
   FEMMINA
 }

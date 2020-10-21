@@ -3,6 +3,7 @@ package banca.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import banca.data.InMemoryDatabase;
 import banca.domain.exception.SaldoInsufficenteException;
 
 public class Banca {
@@ -12,31 +13,15 @@ public class Banca {
 	private static Banca instance = new Banca();
 	private String nome = "Bank of Java";
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
-	
-	private List<Cliente> clienti = new ArrayList<Cliente>();
+		
+	private InMemoryDatabase database = new InMemoryDatabase();
 	
 	private Banca() {
-		init();
 	}
 	
-	private void init() {
-		Cliente c1 = new Cliente(1, "ciccio", "pasticcio", 22, Sesso.MASCHIO);
-		ContoCorrente cc1 = new ContoCayman(1,100,"asdafaf");
-		c1.aggiungiConto(cc1);
-		ContoCorrente cc2 = new ContoItaliano(3,300);
-		c1.aggiungiConto(cc2);
-		clienti.add(c1);
-		
-		Cliente c2 = new Cliente(2, "paola", "carlito", 24, Sesso.FEMMINA);
-		ContoCorrente cc12 = new ContoCayman(15,1000,"asdafar");
-		c2.aggiungiConto(cc12);
-		ContoCorrente cc22 = new ContoItaliano(36,3000);
-		c2.aggiungiConto(cc22);
-		clienti.add(c2);	
-	}
 	
 	public Iterable<Cliente> getClienti() {
-		return clienti;
+		return database.getAllClients();
 	}
 
 	public static Banca getInstance() {
@@ -54,7 +39,7 @@ public class Banca {
 	}
 	
 	public void Deposita(double deposito, int idConto, int idCliente) {
-		for(Cliente cliente : clienti) {
+		for(Cliente cliente : database.getAllClients()) {
 			int id = cliente.getId();
 			if(idCliente == id) {
 				ContoCorrente x = cliente.getContoById(idConto);
@@ -72,7 +57,7 @@ public class Banca {
 		Cliente sorgente = null;
 		Cliente destinatario = null;
 		
-		for(Cliente c : clienti) {
+		for(Cliente c : database.getAllClients()) {
 			int id = c.getId();
 			if(idClienteSorgente == id) {
 				sorgente=c;
