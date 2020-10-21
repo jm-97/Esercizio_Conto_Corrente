@@ -1,5 +1,7 @@
 package banca.ui;
 
+import java.util.Scanner;
+
 import banca.domain.Banca;
 import banca.domain.Cliente;
 import banca.domain.exception.SaldoInsufficenteException;
@@ -9,7 +11,17 @@ public class BankInterface {
 	public static void main(String[] args) {
 			
 		Banca b = Banca.getInstance();
+		Scanner input= new Scanner(System.in);
+		System.out.println("Benvenuto in banca Java. Scegli l'operazione da fare:");
+		StringBuilder sb = new StringBuilder();
+		sb.append("1 - Bonifico ").append(System.lineSeparator())
+		 .append("2 - Prelievo ").append(System.lineSeparator())
+		 .append("3 - Versamento ").append(System.lineSeparator())
+		 .append("4 - Saldo ").append(System.lineSeparator())
+		 .append("5 - Lista utenti").append(System.lineSeparator());
 		
+		System.out.println(sb);
+		/*
 		Iterable<Cliente> ic = b.getClienti();
 		
 		for(Cliente c : ic) {
@@ -31,6 +43,9 @@ public class BankInterface {
 		for(Cliente c : ic) {
 			System.out.println(c);
 		}
+		*/
+		
+		
 	}
 
 }
