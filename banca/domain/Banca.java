@@ -50,10 +50,13 @@ public class Banca  {
 		
 		Cliente sorgente = database.getClientById(idClienteSorgente);
 		Cliente destinatario = database.getClientById(idClienteDestinatario);
+		ContoCorrente ccsorgente=sorgente.getContoById(idContoSorgente);
+		ContoCorrente ccdestinatario=destinatario.getContoById(idContoDestinatario);
 		
+		/*sorgente.getContoById(idContoSorgente)
+			.bonifica(bonifico, destinatario.getContoById(idContoDestinatario));*/		
+		ccsorgente.bonifica(bonifico, ccdestinatario);
 		
-		sorgente.getContoById(idContoSorgente)
-			.bonifica(bonifico, destinatario.getContoById(idContoDestinatario));		
 	}
 	
 	public void preleva(double amount,int idCliente, int idConto) throws SaldoInsufficenteException {

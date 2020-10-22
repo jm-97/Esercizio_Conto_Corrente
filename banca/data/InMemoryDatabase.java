@@ -10,10 +10,17 @@ import banca.domain.ContoItaliano;
 import banca.domain.Sesso;
 
 public class InMemoryDatabase implements Database {
+		Iterable<Cliente> clienti = readAllClients();
+		
+		
 		@Override
-		public Iterable<Cliente> getAllClients(){
-			List<Cliente> clienti = new ArrayList<Cliente>();
+		public Iterable<Cliente> getAllClients() {
+		// TODO Auto-generated method stub
+		return clienti;
+		}
+		private Iterable<Cliente> readAllClients(){
 			
+			List<Cliente> clienti=new ArrayList<Cliente>();
 			
 			Cliente c1 = new Cliente(1, "ciccio", "pasticcio", 22, Sesso.MASCHIO);
 			ContoCorrente cc1 = new ContoCayman(1,100,"asdafaf");
