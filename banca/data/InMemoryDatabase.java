@@ -9,8 +9,8 @@ import banca.domain.ContoCorrente;
 import banca.domain.ContoItaliano;
 import banca.domain.Sesso;
 
-public class InMemoryDatabase {
-		
+public class InMemoryDatabase implements Database {
+		@Override
 		public Iterable<Cliente> getAllClients(){
 			List<Cliente> clienti = new ArrayList<Cliente>();
 			
@@ -31,4 +31,22 @@ public class InMemoryDatabase {
 			
 			return clienti;
 		}
+
+		@Override
+		public Cliente getClientById(int idCliente) {
+			// TODO Auto-generated method stub
+			Iterable <Cliente> allClients = this.getAllClients();
+			for(Cliente c: allClients) {
+				if(c.getId()==idCliente) {
+					return c;
+					
+				}
+				
+			}
+			return null;
+			
+		}
+
+		
+		                               
 }

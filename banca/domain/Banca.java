@@ -3,10 +3,11 @@ package banca.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import banca.data.Database;
 import banca.data.InMemoryDatabase;
 import banca.domain.exception.SaldoInsufficenteException;
 
-public class Banca {
+public class Banca  {
 			
 	//singleton 1 solo oggetto istanziato nella classe
 	
@@ -14,7 +15,7 @@ public class Banca {
 	private String nome = "Bank of Java";
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
-	private InMemoryDatabase database = new InMemoryDatabase();
+	private Database database = new InMemoryDatabase();
 	
 	private Banca() {
 	}
@@ -39,38 +40,32 @@ public class Banca {
 	}
 	
 	public void Deposita(double deposito, int idConto, int idCliente) {
-		for(Cliente cliente : database.getAllClients()) {
-			int id = cliente.getId();
-			if(idCliente == id) {
-				ContoCorrente x = cliente.getContoById(idConto);
-				
-				x.deposita(deposito);
-				return;
-			}
-		}
+		Cliente c=database.getClientById(idCliente);
+		c.getContoById(idConto).deposita(deposito);
 		
 	}
 	
 	public void Bonifica(double bonifico, int idContoSorgente, int idClienteSorgente,
 			int idContoDestinatario, int idClienteDestinatario) throws SaldoInsufficenteException {
 		
-		Cliente sorgente = null;
-		Cliente destinatario = null;
+		Cliente sorgente = database.getClientById(idClienteSorgente);
+		Cliente destinatario = database.getClientById(idClienteDestinatario);
 		
-		for(Cliente c : database.getAllClients()) {
-			int id = c.getId();
-			if(idClienteSorgente == id) {
-				sorgente=c;
-// andrebbe nell'oggetto e modificherebbe sorgente
-				//c.setName("Paolo")
-			}else if(idClienteDestinatario == id){
-				destinatario=c;
-			}
-		}
+		
 		sorgente.getContoById(idContoSorgente)
 			.bonifica(bonifico, destinatario.getContoById(idContoDestinatario));		
 	}
+	
+	public void preleva(double amount,int idCliente, int idConto) throws SaldoInsufficenteException {
+		Cliente c=database.getClientById(idCliente);
+		c.getContoById(idConto).preleva(amount);
+		
+	}
 
+	public Cliente getClientById(int idCliente) {
+		
+		return database.getClientById(idCliente);
+	}
 	
 	
 	
