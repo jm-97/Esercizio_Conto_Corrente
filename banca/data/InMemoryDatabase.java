@@ -7,6 +7,7 @@ import banca.domain.Cliente;
 import banca.domain.ContoCayman;
 import banca.domain.ContoCorrente;
 import banca.domain.ContoItaliano;
+import banca.domain.Impiegato;
 import banca.domain.Sesso;
 
 public class InMemoryDatabase implements Database {
@@ -52,6 +53,11 @@ public class InMemoryDatabase implements Database {
 			}
 			return null;
 			
+		}
+		@Override
+		public Iterable<Impiegato> getAllEmployees() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 		

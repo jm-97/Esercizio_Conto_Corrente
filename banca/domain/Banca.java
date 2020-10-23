@@ -1,9 +1,11 @@
 package banca.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import banca.data.Database;
+import banca.data.FileSystemDatabase;
 import banca.data.InMemoryDatabase;
 import banca.domain.exception.SaldoInsufficenteException;
 
@@ -16,7 +18,7 @@ public class Banca  {
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
 	private Database database = new InMemoryDatabase();
-	
+	private Database dbImpiegati = new FileSystemDatabase();
 	private Banca() {
 	}
 	
@@ -70,6 +72,9 @@ public class Banca  {
 		return database.getClientById(idCliente);
 	}
 	
-	
+	public double getSommaStipendi() {
+		Collection<Impiegato> ci=(Collection)dbImpiegati.getAllEmployees();
+		return null;//to do da fare
+	}
 	
 }
