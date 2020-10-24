@@ -2,8 +2,8 @@ package banca.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Paths;
+//import java.io.IOException;
+//import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,33 @@ import banca.domain.Impiegato;
 import banca.domain.Sesso;
 
 public class FileSystemDatabase implements Database {
-	private Iterable<Impiegato>impiegati=getAllEmployees();
 	
+	private List<Impiegato>impiegati;
+	private String separator;
+	private String nomefile;
+	
+	public FileSystemDatabase(String nomefile, String separator) {
+		this.separator = separator;
+		this.nomefile = nomefile;
+		this.impiegati = readFile();
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
+	public String getNomefile() {
+		return nomefile;
+	}
+
+	public void setNomefile(String nomefile) {
+		this.nomefile = nomefile;
+	}
+
 	@Override
 	public Cliente getClientById(int idCliente) {
 		// TODO Auto-generated method stub
@@ -29,27 +54,19 @@ public class FileSystemDatabase implements Database {
 	}
 
 	@Override
-	public Iterable<Impiegato> getAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Impiegato> getAllEmployees() {
+		return this.impiegati;
 	}
 	
-	public Iterable<Impiegato> getIterableImpiegati(){
-		return impiegati;
-	}
-	
-	public Iterable<Impiegato> readFile(String fileName,String separator) {
+	public List<Impiegato> readFile() {
 		List<Impiegato> listaImpiegato=new ArrayList<Impiegato>();
 		
 		Scanner input=null;
 		//String path=new File("").getAbsolutePath();
 		//System.out.println(path);
 		
-		
-		
-		
 		try {
-			input = new Scanner(new File(fileName));
+			input = new Scanner(new File(this.nomefile));
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -57,7 +74,7 @@ public class FileSystemDatabase implements Database {
 		}
 		while (input.hasNextLine()) {
 			String line=input.nextLine();
-			String[] args=line.split(separator);
+			String[] args=line.split(this.separator);
 			Impiegato imp=new Impiegato(Integer.parseInt(args[0]),args[1],args[2],LocalDate.parse(args[3]),Sesso.valueOf(args[4]),Double.parseDouble(args[5]));                         
 			listaImpiegato.add(imp);
 			

@@ -1,7 +1,7 @@
 package banca.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
+//import java.util.ArrayList;
+//import java.util.Collection;
 import java.util.List;
 
 import banca.data.Database;
@@ -18,10 +18,14 @@ public class Banca  {
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
 	private Database database = new InMemoryDatabase();
-	private Database dbImpiegati = new FileSystemDatabase();
+	private Database dbImpiegati;
+	
 	private Banca() {
 	}
 	
+	public void initDbImpiegati(String nomefile, String separator) {
+		this.dbImpiegati = new FileSystemDatabase(nomefile, separator);
+	}
 	
 	public Iterable<Cliente> getClienti() {
 		return database.getAllClients();
@@ -73,8 +77,6 @@ public class Banca  {
 	}
 	
 	public double getSommaStipendi() {
-		Collection<Impiegato> ci=(Collection)dbImpiegati.getAllEmployees();
-		return null;//to do da fare
+		return ((List<Impiegato>) dbImpiegati.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).sum();
 	}
-	
 }
