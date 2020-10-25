@@ -39,5 +39,17 @@ public class Impiegato {
 		return stipendio;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Dati impiegato/a:").append(System.lineSeparator())
+		.append("ID: " + this.id).append(System.lineSeparator())
+		.append("Nome: " + this.nome).append(System.lineSeparator())
+		.append("Cognome: " + this.cognome).append(System.lineSeparator())
+		.append("Data di nascita: " + this.dataNascita).append(System.lineSeparator())
+		.append("Sesso: " + this.sesso).append(System.lineSeparator())
+		.append("Stipendio: " + this.stipendio).append(System.lineSeparator());
+		return sb.toString(); 
+	}
+	
 	
 }

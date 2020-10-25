@@ -1,3 +1,4 @@
-qwerty
-asdfgh
-zxcvbb
+1,Mario,Rossi,1998-11-22,MASCHIO,1000.0
+2,Gino,Pasticcio,1998-11-22,MASCHIO,3000.0
+3,Gianni,Morandi,1998-11-22,MASCHIO,2500.0
+4,Paola,Scarlati,1998-11-22,FEMMINA,4000.0

@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 //import java.io.IOException;
 //import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,7 +51,6 @@ public class FileSystemDatabase implements Database {
 
 	@Override
 	public Iterable<Cliente> getAllClients() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -58,28 +59,35 @@ public class FileSystemDatabase implements Database {
 		return this.impiegati;
 	}
 	
+	
 	public List<Impiegato> readFile() {
 		List<Impiegato> listaImpiegato=new ArrayList<Impiegato>();
-		
 		Scanner input=null;
-		//String path=new File("").getAbsolutePath();
-		//System.out.println(path);
-		
 		try {
-			input = new Scanner(new File(this.nomefile));
-			
+			input = new Scanner(new File(this.nomefile));			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while (input.hasNextLine()) {
-			String line=input.nextLine();
-			String[] args=line.split(this.separator);
-			Impiegato imp=new Impiegato(Integer.parseInt(args[0]),args[1],args[2],LocalDate.parse(args[3]),Sesso.valueOf(args[4]),Double.parseDouble(args[5]));                         
+			String line = input.nextLine();
+			String[] args= line.split(this.separator);
+			for ( String s : args ) {
+				s.trim();
+			}
+			Impiegato imp = new Impiegato(Integer.parseInt(args[0]),args[1],args[2], LocalDate.parse(args[3]),Sesso.valueOf(args[4]),Double.parseDouble(args[5]));                         
 			listaImpiegato.add(imp);
-			
 		}
 		return listaImpiegato;
+	}
+
+	@Override
+	public Impiegato getEmployedById(int idImpiegato) {
+		for ( Impiegato i : impiegati ) {
+			if ( i.getId() == idImpiegato ) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 }

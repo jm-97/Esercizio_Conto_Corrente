@@ -31,7 +31,7 @@ public class BankMenu {
 				scelta(input.nextInt(), idCliente);
 			}
 			
-		}while (flag);
+		} while (flag);
 
 	}
 	

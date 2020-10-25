@@ -60,6 +60,13 @@ public class InMemoryDatabase implements Database {
 		return null;
 	}
 
+
+	@Override
+	public Impiegato getEmployedById(int idImpiegato) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 		                               
 }

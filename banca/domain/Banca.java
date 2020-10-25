@@ -1,5 +1,7 @@
 package banca.domain;
 
+import java.util.Collections;
+import java.util.Comparator;
 //import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
@@ -17,18 +19,13 @@ public class Banca  {
 	private String nome = "Bank of Java";
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
-	private Database database = new InMemoryDatabase();
-	private Database dbImpiegati;
-	
-	private Banca() {
-	}
-	
-	public void initDbImpiegati(String nomefile, String separator) {
-		this.dbImpiegati = new FileSystemDatabase(nomefile, separator);
-	}
+	private Database database = new FileSystemDatabase("impiegati.txt", ",");
 	
 	public Iterable<Cliente> getClienti() {
 		return database.getAllClients();
+	}
+	
+	private Banca() {
 	}
 
 	public static Banca getInstance() {
@@ -57,10 +54,7 @@ public class Banca  {
 		Cliente sorgente = database.getClientById(idClienteSorgente);
 		Cliente destinatario = database.getClientById(idClienteDestinatario);
 		ContoCorrente ccsorgente=sorgente.getContoById(idContoSorgente);
-		ContoCorrente ccdestinatario=destinatario.getContoById(idContoDestinatario);
-		
-		/*sorgente.getContoById(idContoSorgente)
-			.bonifica(bonifico, destinatario.getContoById(idContoDestinatario));*/		
+		ContoCorrente ccdestinatario=destinatario.getContoById(idContoDestinatario);		
 		ccsorgente.bonifica(bonifico, ccdestinatario);
 		
 	}
@@ -76,7 +70,31 @@ public class Banca  {
 		return database.getClientById(idCliente);
 	}
 	
-	public double getSommaStipendi() {
-		return ((List<Impiegato>) dbImpiegati.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).sum();
+	public Iterable<Impiegato> getAllEmployees() {
+		return database.getAllEmployees();
 	}
+	
+	
+	public double getSommaStipendi() {
+		return ((List<Impiegato>) database.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).sum();
+	}
+	
+	public double getMediaStipendi() {
+		List<Impiegato> imps = (List<Impiegato>) database.getAllEmployees();
+		return ( getSommaStipendi() / imps.size() );
+		// Utilizzato lo stream del somma stipendi
+	}
+	
+	public boolean verificaStipendioMaschile () {
+		return false; // Ancora da implementare
+	}
+	
+	public double getMedianaStipendi () {
+		// Non sono sicuro che sia giusto
+		List<Impiegato> imps = (List<Impiegato>) database.getAllEmployees();
+		imps.sort((i1, i2) -> (int) Math.signum(i1.getStipendio() - i2.getStipendio())); 
+		return imps.get(imps.size() / 2).getStipendio();
+	}
+	
+	
 }

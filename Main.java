@@ -1,5 +1,14 @@
+import banca.data.Database;
+import banca.data.FileSystemDatabase;
+import banca.domain.Impiegato;
+
 public class Main {
   public static void main(String[] args) {
-    // Poi inseriamo i metodi da avviare nel Main appena ci siamo
+		Database database = new FileSystemDatabase("impiegati.txt", ",");
+		Iterable<Impiegato> imps = database.getAllEmployees(); 
+		for ( Impiegato i : imps ) {
+			System.out.println(i);
+		}
+
   }
 }
