@@ -2,6 +2,9 @@ package banca.ui;
 
 import java.util.Scanner;
 
+import banca.ui.menu.BankMenu;
+import banca.ui.menu.BankMenuImpiegati;
+
 public class BankInterface {
 	
 	public static void main(String[] args) {

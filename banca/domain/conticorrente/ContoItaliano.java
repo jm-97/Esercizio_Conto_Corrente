@@ -1,4 +1,4 @@
-package banca.domain; 
+package banca.domain.conticorrente;
 
 // In questa classe Estendiamo la classe ContoCorrente che al momento è classe madre di questa.
 public class ContoItaliano extends ContoCorrente {

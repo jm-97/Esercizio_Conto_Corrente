@@ -1,9 +1,9 @@
-package banca.ui;
+package banca.ui.menu;
 import java.util.Scanner;
 
 import banca.domain.Banca;
 import banca.domain.Cliente;
-import banca.domain.ContoCorrente;
+import banca.domain.conticorrente.ContoCorrente;
 //import banca.domain.Cliente;
 import banca.domain.exception.SaldoInsufficenteException;
 

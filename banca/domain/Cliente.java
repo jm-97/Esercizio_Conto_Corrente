@@ -3,6 +3,7 @@ package banca.domain;
 import java.util.Map;
 import java.util.HashMap;
 import banca.domain.*;
+import banca.domain.conticorrente.ContoCorrente;
 
 public class Cliente {
 	

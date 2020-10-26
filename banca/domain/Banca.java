@@ -1,6 +1,7 @@
 package banca.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import banca.data.Database;
 import banca.data.FileSystemDatabase;
 import banca.data.InMemoryDatabase;
+import banca.domain.conticorrente.ContoCorrente;
 import banca.domain.exception.SaldoInsufficenteException;
 
 public class Banca  {
@@ -123,7 +125,8 @@ public class Banca  {
 
 	}
 	
-	public String getAllData () {
-		return null;
+	public StatisticheImpiegati getAllData () {
+		return ((List<Impiegato>) database.getAllEmployees()).strì
+		.reduce(new StatisticheImpiegati(), (stat, emp) -> stat.combina(emp), ((u1, u2) -> u1.combina(u2)));
 	}
 }

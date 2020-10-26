@@ -1,4 +1,6 @@
-package banca.domain;
+package banca.domain.conticorrente;
+
+import banca.domain.Banca;
 
 public class ContoCayman extends ContoCorrente {
 	

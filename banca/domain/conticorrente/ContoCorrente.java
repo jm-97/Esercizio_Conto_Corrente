@@ -1,5 +1,6 @@
-package banca.domain;
+package banca.domain.conticorrente;
 
+import banca.domain.Cliente;
 import banca.domain.exception.*;
 
 public abstract class ContoCorrente {

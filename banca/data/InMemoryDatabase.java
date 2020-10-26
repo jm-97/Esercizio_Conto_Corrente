@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import banca.domain.Cliente;
-import banca.domain.ContoCayman;
-import banca.domain.ContoCorrente;
-import banca.domain.ContoItaliano;
 import banca.domain.Impiegato;
 import banca.domain.Sesso;
+import banca.domain.conticorrente.ContoCayman;
+import banca.domain.conticorrente.ContoCorrente;
+import banca.domain.conticorrente.ContoItaliano;
 
 public class InMemoryDatabase implements Database {
 		
