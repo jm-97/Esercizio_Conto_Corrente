@@ -1,10 +1,13 @@
 package banca.domain;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 //import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import banca.data.Database;
 import banca.data.FileSystemDatabase;
@@ -17,9 +20,10 @@ public class Banca  {
 	
 	private static Banca instance = new Banca();
 	private String nome = "Bank of Java";
+	private final static String  FILE_NAME = "impiegati.txt";
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
-	private Database database = new FileSystemDatabase("impiegati.txt", ",");
+	private Database database = new FileSystemDatabase(FILE_NAME, ",");
 	
 	public Iterable<Cliente> getClienti() {
 		return database.getAllClients();
@@ -80,21 +84,46 @@ public class Banca  {
 	}
 	
 	public double getMediaStipendi() {
-		List<Impiegato> imps = (List<Impiegato>) database.getAllEmployees();
-		return ( getSommaStipendi() / imps.size() );
-		// Utilizzato lo stream del somma stipendi
+		return ((List<Impiegato>) database.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).average().getAsDouble();
 	}
 	
 	public boolean verificaStipendioMaschile () {
-		return false; // Ancora da implementare
+		return ((List<Impiegato>) database.getAllEmployees()).stream()
+			.filter(i -> i.getSesso().equals(Sesso.MASCHIO))
+			.mapToDouble(Impiegato::getStipendio)
+			.summaryStatistics().getMin() 
+			>
+		  	((List<Impiegato>) database.getAllEmployees()).stream()
+			.filter(i -> i.getSesso().equals(Sesso.FEMMINA))
+			.mapToDouble(Impiegato::getStipendio)
+			.summaryStatistics().getMin();
 	}
 	
 	public double getMedianaStipendi () {
 		// Non sono sicuro che sia giusto
 		List<Impiegato> imps = (List<Impiegato>) database.getAllEmployees();
-		imps.sort((i1, i2) -> (int) Math.signum(i1.getStipendio() - i2.getStipendio())); 
-		return imps.get(imps.size() / 2).getStipendio();
+		if ( (imps.size() & 1) == 0 ) {
+		return imps.stream() 
+			.sorted((i1, i2) -> (int) Math.signum(i1.getStipendio() - i2.getStipendio()))
+			.mapToDouble(Impiegato::getStipendio)
+			.limit(imps.size()/2 + 1).skip(imps.size()/2-1).average().getAsDouble();
+		} else {
+			return imps.stream()
+				.sorted((i1, i2) -> (int) Math.signum(i1.getStipendio() - i2.getStipendio()))
+				.mapToDouble(Impiegato::getStipendio)
+				.skip(imps.size()/2).findFirst().getAsDouble();
+		}
 	}
 	
+	public List<Impiegato> getDipendentiMaschiGiovani() {
+		return ((List<Impiegato>) database.getAllEmployees()).stream()
+		.filter(i -> i.getSesso().equals(Sesso.MASCHIO))
+		.filter(i -> i.getDataNascita().isAfter(LocalDate.now().minusYears(25)))
+		.collect(Collectors.toList());
+
+	}
 	
+	public String getAllData () {
+		return null;
+	}
 }

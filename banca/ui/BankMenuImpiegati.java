@@ -15,7 +15,8 @@ public class BankMenuImpiegati {
 		.append("3 - Visualizza mediana stipendi").append(System.lineSeparator())
 		.append("4 - Verifica stipendi uomo / donna").append(System.lineSeparator())
 		.append("5 - Stampa impiegati maschi < 25 anni").append(System.lineSeparator())
-		.append("6 - Calcolo di tutti i dati").append(System.lineSeparator());
+		.append("6 - Calcolo di tutti i dati").append(System.lineSeparator())
+		.append("7 - Stampa impiegati").append(System.lineSeparator());
 		System.out.println(sb.toString());
 		scelta(input.nextInt());
 	}
@@ -35,17 +36,26 @@ public class BankMenuImpiegati {
 			}
 			break; 
 			case 4: {
-				
+				System.out.println("Il minor stipendio degli uomini e piu' " + (b.verificaStipendioMaschile() ? "alto" : "basso") + "del maggior stipendio della donne");
 			}
 			break; 
 			case 5: {
-				
+				b.getDipendentiMaschiGiovani().forEach(System.out::println);
 			}
 			break; 
 			case 6: {
-				
+	
 			}
 			break; 
+			case 7: {
+				// Method reference con il toString()
+				b.getAllEmployees().forEach(System.out::println);
 			}
+			break;
+			default: {
+				System.out.println("Scelta sbagliata");
+			}
+			break; 
 		}
+	}
 }

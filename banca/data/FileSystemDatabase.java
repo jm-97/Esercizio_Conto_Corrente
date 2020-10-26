@@ -71,10 +71,7 @@ public class FileSystemDatabase implements Database {
 		while (input.hasNextLine()) {
 			String line = input.nextLine();
 			String[] args= line.split(this.separator);
-			for ( String s : args ) {
-				s.trim();
-			}
-			Impiegato imp = new Impiegato(Integer.parseInt(args[0]),args[1],args[2], LocalDate.parse(args[3]),Sesso.valueOf(args[4]),Double.parseDouble(args[5]));                         
+			Impiegato imp = new Impiegato(Integer.parseInt(args[0].trim()),args[1].trim(),args[2].trim(), LocalDate.parse(args[3].trim()),Sesso.valueOf(args[4].trim()),Double.parseDouble(args[5].trim()));                         
 			listaImpiegato.add(imp);
 		}
 		return listaImpiegato;
