@@ -8,6 +8,7 @@ import java.util.Comparator;
 //import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import banca.data.Database;
@@ -86,7 +87,7 @@ public class Banca  {
 	}
 	
 	public double getMediaStipendi() {
-		return ((List<Impiegato>) database.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).average().getAsDouble();
+		return Math.round(((List<Impiegato>) database.getAllEmployees()).stream().mapToDouble(Impiegato::getStipendio).average().getAsDouble());                    
 	}
 	
 	public boolean verificaStipendioMaschile () {
@@ -126,7 +127,19 @@ public class Banca  {
 	}
 	
 	public StatisticheImpiegati getAllData () {
-		return ((List<Impiegato>) database.getAllEmployees()).strì
+		return ((List<Impiegato>) database.getAllEmployees()).stream()
 		.reduce(new StatisticheImpiegati(), (stat, emp) -> stat.combina(emp), ((u1, u2) -> u1.combina(u2)));
+		//1 parametro è l'oggetto vuoto=valore iniziale-di default
+		//param 2 = Accumulator=lambda che prende come input il risultato parziale e il successivo val dello stream
+		//param 3 = combiner=lambda che serve per il multithread
+	}
+	
+	public void getModa(){
+		 ((List<Impiegato>) database.getAllEmployees())
+				.stream().collect(Collectors.groupingBy(x->x.getStipendio(),Collectors.counting())).entrySet()
+				.stream().filter(x->x.getValue()>1)
+				.sorted((x1,x2)->(int)Math.signum(x2.getValue()-x1.getValue())).filter((x1,x2)->x1==x2)        
+		
+		 
 	}
 }
